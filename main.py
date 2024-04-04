@@ -4,7 +4,7 @@ def conectar_bd():
     cliente = pymongo.MongoClient("localhost", 27017)
     return cliente["test"], cliente
 
-def mostrar_menu():
+def mostrar_menu(): 
     print("Menú:")
     print("1. Listar todos los documentos")
     print("2. Crear un nuevo documento")
