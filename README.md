@@ -2,7 +2,7 @@
 
 Instalación de dependencias
 
-Asegúrate de tener Python 3 y MongoDB instalados en tu sistema operativo. En sistemas basados en Linux, como Ubuntu, puedes instalar MongoDB utilizando el administrador de paquetes de tu distribución. En este caso que utilizamos Ubuntu, por lo tanto ejecutamos: 
+Primeramente, hay que tener Python 3 y MongoDB instalados en el sistema operativo. En sistemas basados en Linux, como Ubuntu, puedes instalar MongoDB utilizando el administrador de paquetes de tu distribución. En este caso que utilizamos Ubuntu, por lo tanto ejecutamos: 
 
 sudo apt update
 sudo apt install mongodb
