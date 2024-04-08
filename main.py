@@ -1,4 +1,5 @@
 import pymongo
+import pprint
 
 def conectar_bd():
     cliente = pymongo.MongoClient("localhost", 27017)
@@ -15,9 +16,23 @@ def mostrar_menu():
 def listar_documentos(coleccion):
     print("Documentos en la colección:")
     for documento in coleccion.find():
-        print(documento)
+        pprint.pprint(documento)
+
+def obtener_ultimo_restaurant_id(coleccion):
+    # Consultar la colección para obtener el restaurant_id más alto
+    ultimo_documento = coleccion.find_one(sort=[("restaurant_id", pymongo.DESCENDING)])
+
+    if ultimo_documento and 'restaurant_id' in ultimo_documento:
+        return int(ultimo_documento['restaurant_id'])  # Convertir a entero
+    else:
+        # Si no hay documentos o no se encontró restaurant_id, retorna por defecto.
+        return 0
 
 def crear_documento(coleccion):
+    # Obtener el último restaurant_id y calcular el siguiente
+    ultimo_restaurant_id = obtener_ultimo_restaurant_id(coleccion)
+    nuevo_restaurant_id = ultimo_restaurant_id + 1
+
     nombre = input("Ingrese el nombre del restaurante: ")
     building = input("Ingrese el número de edificio: ")
     street = input("Ingrese el nombre de la calle: ")
@@ -30,6 +45,7 @@ def crear_documento(coleccion):
     coordenadas = [coord_lon, coord_lat]
 
     nuevo_documento = {
+        "restaurant_id": nuevo_restaurant_id,
         "name": nombre,
         "address": {
             "building": building,
@@ -41,8 +57,10 @@ def crear_documento(coleccion):
         "cuisine": cuisine,
         "grades": []
     }
+
+    # Insertar el nuevo documento en la colección
     coleccion.insert_one(nuevo_documento)
-    print("Documento creado exitosamente.")
+    print("Documento creado exitosamente con restaurant_id:", nuevo_restaurant_id)
 
 def actualizar_documento(coleccion):
     nombre = input("Ingrese el nombre del restaurante a actualizar: ")
