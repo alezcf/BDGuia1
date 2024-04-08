@@ -18,7 +18,70 @@ Inicialmente, se debe inicializar el proceso para importar una colección en `fo
 
     mongoimport --db test --collection restaurants --drop --file dataset.json
 
-dicha operación hará que se guarde la colección `restaurants` en nuestro programa Mongo previamente instalado. 
+dicha operación hará que se guarde la colección `restaurants` en nuestro programa Mongo previamente instalado.
+
+El schema de los elementos de la colección es el siguiente
+
+    {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "objectId",
+          "description": "Identificador único del documento"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "building": {
+              "type": "string",
+              "description": "Número de edificio del restaurante"
+            },
+            "coord": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "description": "Coordenadas [longitud, latitud] de la ubicación del restaurante"
+            },
+            "street": {
+              "type": "string",
+              "description": "Nombre de la calle de la ubicación del restaurante"
+            },
+            "zipcode": {
+              "type": "string",
+              "description": "Código postal de la ubicación del restaurante"
+            }
+          },
+          "required": ["building", "coord", "street", "zipcode"],
+          "description": "Detalles de la dirección del restaurante"
+        },
+        "borough": {
+          "type": "string",
+          "description": "Distrito (barrio) donde se encuentra el restaurante"
+        },
+        "cuisine": {
+          "type": "string",
+          "description": "Tipo de cocina que ofrece el restaurante"
+        },
+        "grades": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Lista de calificaciones recibidas por el restaurante en inspecciones"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nombre del restaurante"
+        },
+        "restaurant_id": {
+          "type": "string",
+          "description": "Identificador único del restaurante"
+        }
+      },
+      "required": ["_id", "address", "borough", "cuisine", "name", "restaurant_id"],
+      "description": "Esquema para un documento de restaurante en MongoDB"
+    }
 
 
 ## ***Inicio de Servicios***
